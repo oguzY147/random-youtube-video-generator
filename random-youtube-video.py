@@ -7,8 +7,8 @@ DEVELOPER_KEY = 'YOUR_DEVELOPER_KEY'
 YOUTUBE_API_SERVICE_NAME = 'youtube'
 YOUTUBE_API_VERSION = 'v3'
 
-prefix = ['IMG ', 'IMG_', 'IMG-', 'DSC ']
-postfix = [' MOV', '.MOV', ' .MOV']
+prefix = ['VIDEO', 'VIDEO ','VIDEO-', 'VIDEO_', 'IMG ', 'IMG_', 'IMG-', 'DSC ', 'VID', 'VID-', 'VID_', 'VID ']
+postfix = [' MOV', '.MOV', 'MOV', 'AVI', ' AVI', '.AVI', ' MP4', '.MP4', 'MP4']
 
 def youtube_search():
   youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, developerKey=DEVELOPER_KEY)
@@ -24,6 +24,9 @@ def youtube_search():
   for search_result in search_response.get('items', []):
     if search_result['id']['kind'] == 'youtube#video':
       videos.append('%s' % (search_result['id']['videoId']))
-  return (videos[random.randint(0, 2)])
-
+  if(len(videos) != 0):
+    video = "https://www.youtube.com/watch?v=" + videos[random.randint(0, len(videos))]
+    return video
+  else:
+    youtube_search()
 print(youtube_search())
